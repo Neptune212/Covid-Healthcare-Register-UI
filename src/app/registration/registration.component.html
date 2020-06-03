@@ -1,0 +1,46 @@
+<div class="content" role="main">
+
+  <!-- Resources -->
+  <h3>Register Hospital</h3>
+  <br>
+
+  <form (submit)="addUpdate()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input [(ngModel)]="hospital.name" class="form-control" id="name" name="name" placeholder="Hospital Name"
+             type="text">
+    </div>
+    <div class="form-group">
+      <label for="hospitalId">Hospital ID</label>
+      <input [(ngModel)]="hospital.hospitalId" class="form-control" id="hospitalId" name="hospitalId"
+             placeholder="Auto Generated Hospital ID" readonly type="text">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="emailId">Email</label>
+        <input [(ngModel)]="hospital.emailId" class="form-control" id="emailId" name="emailId" type="email">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="phone">Phone</label>
+        <input [(ngModel)]="hospital.phone" class="form-control" id="phone" name="phone" type="test">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="city">City</label>
+        <input [(ngModel)]="hospital.city" class="form-control" id="city" name="city" type="text">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="zipCode">Zip</label>
+        <input [(ngModel)]="hospital.zipCode" class="form-control" id="zipCode" name="zipCode" type="text">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="details">Details</label>
+      <input [(ngModel)]="hospital.details" class="form-control" id="details" name="details"
+             placeholder="Additional Details" type="text">
+    </div>
+    <button class="btn btn-primary" type="submit">Add/Update</button>
+  </form>
+
+</div>

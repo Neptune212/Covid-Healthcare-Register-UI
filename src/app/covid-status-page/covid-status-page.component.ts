@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Country, CovidSummary, Global} from '../models/covid_summary';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-covid-status-page',
@@ -8,15 +10,20 @@ import {HttpClient} from '@angular/common/http';
 })
 export class CovidStatusPageComponent implements OnInit {
 
-  myTemplate: any = '';
+  global: Observable<Global>;
+  countries: Observable<Country[]>;
 
   constructor(private http: HttpClient) {
-    this.http.get('https://www.mohfw.gov.in', {responseType: 'text'}).subscribe(
-      (html) => this.myTemplate = html
-    );
   }
 
   ngOnInit(): void {
+    this.http.get<CovidSummary>('https://api.covid19api.com/summary').subscribe(
+      (res) => {
+        this.global = of(res.Global);
+        this.countries = of(res.Countries);
+      },
+      (error) => console.log('Error loading Covid Summary')
+    );
   }
 
 }

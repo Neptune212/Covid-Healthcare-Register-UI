@@ -3,6 +3,8 @@
   <!-- Resources -->
   <h3>Live status of available hospital resources</h3>
   <br>
+  <div *ngIf="isSubscribed" class="alert alert-success">You have subscribed for availability notifications.</div>
+  <div *ngIf="isErrorSubscribing" class="alert alert-error">Error subscribing.</div>
 
   <div class="d-none d-sm-block content" style="overflow: auto; width: 100%; margin-top: 10px;">
     <table class="table">
@@ -23,6 +25,8 @@
         <th scope="col">Available From</th>
         <th scope="col">Available Till</th>
         <th scope="col">Subscribe</th>
+        <th scope="col">Directions</th>
+        <th *ngIf="isLoggedIn" scope="col">Edit</th>
       </tr>
       </thead>
       <tbody>
@@ -37,26 +41,26 @@
         <td>
           <span>{{hospitalRecord.itemName}}</span>
         </td>
-        <td *ngIf="hospitalRecord.isAvailable" class="bg-success">
+        <td *ngIf="hospitalRecord.availableCount > 0" class="bg-success">
           <span>YES</span>
         </td>
-        <td *ngIf="!hospitalRecord.isAvailable" class="bg-danger">
+        <td *ngIf="hospitalRecord.availableCount == 0" class="bg-danger">
           <span>NO</span>
         </td>
         <td>
-          <span>{{hospitalRecord.hospitalId}}</span>
+          <span>{{hospitalRecord.hospitalRegistration.hospitalId}}</span>
         </td>
         <td>
-          <span>{{hospitalRecord.name}}</span>
+          <span>{{hospitalRecord.hospitalRegistration.name}}</span>
         </td>
         <td>
-          <span>{{hospitalRecord.phone}}</span>
+          <span>{{hospitalRecord.hospitalRegistration.phone}}</span>
         </td>
         <td>
-          <span>{{hospitalRecord.email}}</span>
+          <span>{{hospitalRecord.hospitalRegistration.emailId}}</span>
         </td>
         <td>
-          <span>{{hospitalRecord.address}}</span>
+          <span>{{hospitalRecord.hospitalRegistration.addressDetails}}</span>
         </td>
         <td>
           <span>{{hospitalRecord.itemId}}</span>
@@ -71,7 +75,16 @@
           <span>{{hospitalRecord.availableTill}}</span>
         </td>
         <td>
-          <input type="checkbox">
+          <input (change)="subscribeAddRemove($event, hospitalRecord)" type="checkbox">
+        </td>
+        <td>
+          <a
+            [queryParams]="{'latitude': hospitalRecord.hospitalRegistration.latitude, 'longitude': hospitalRecord.hospitalRegistration.longitude}"
+            class="nav-item nav-link text-black" href="#" routerLink="/location">Directions</a>
+        </td>
+        <td *ngIf="isLoggedIn">
+          <a [state]="{ data: hospitalRecord}" class="nav-item nav-link text-black" href="#"
+             routerLink="/manage">Edit</a>
         </td>
       </tr>
       </tbody>
@@ -92,8 +105,8 @@
         <th scope="col">Name</th>
         <th scope="col">Phone</th>
         <th scope="col">Email</th>
-        <th scope="col">Address</th>
         <th scope="col">Subscribe</th>
+        <th scope="col">Directions</th>
       </tr>
       </thead>
       <tbody>
@@ -124,16 +137,33 @@
           <span>{{hospitalRecord.email}}</span>
         </td>
         <td>
-          <span>{{hospitalRecord.address}}</span>
+          <input (change)="subscribeAddRemove($event, hospitalRecord)" type="checkbox">
         </td>
         <td>
-          <input type="checkbox">
+          <a [queryParams]="{'latitude': hospitalRecord.latitude, 'longitude': hospitalRecord.longitude}"
+             class="nav-item nav-link text-black" href="#" routerLink="/location">Directions</a>
         </td>
       </tr>
       </tbody>
     </table>
 
   </div>
+  <form (submit)="subscribe()">
+    <div class="form-group">
+      <label>Subscribe to notications for selected items.</label>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-9">
+        <input [(ngModel)]="subscribersEmail" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputAddress" placeholder="Email ID" type="text">
+      </div>
+      <div class="form-group col-md-3">
+        <button class="btn btn-primary" type="submit">Subscribe</button>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="isSubscribed" class="alert alert-success">You have subscribed for availability notifications.</div>
+  <div *ngIf="isErrorSubscribing" class="alert alert-error">Error subscribing.</div>
 
   <br>
   <br>

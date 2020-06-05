@@ -3,44 +3,53 @@
   <!-- Resources -->
   <h3>Register Hospital</h3>
   <br>
+  <div *ngIf="isSaved" class="alert alert-success">Saved successfully. You can close or move to other page.</div>
+  <div *ngIf="!isSaved" class="alert alert-error">Not Saved.</div>
 
   <form (submit)="addUpdate()">
     <div class="form-group">
-      <label for="name">Name</label>
-      <input [(ngModel)]="hospital.name" class="form-control" id="name" name="name" placeholder="Hospital Name"
-             type="text">
+      <label for="input4name">Name</label>
+      <input (change)="updateId()" [(ngModel)]="hospital.name" [ngModelOptions]="{standalone: true}"
+             class="form-control" id="input4name" placeholder="Hospital Name" type="text">
     </div>
     <div class="form-group">
-      <label for="hospitalId">Hospital ID</label>
-      <input [(ngModel)]="hospital.hospitalId" class="form-control" id="hospitalId" name="hospitalId"
-             placeholder="Auto Generated Hospital ID" readonly type="text">
+      <label for="input4hospitalId">Hospital ID</label>
+      <input [(ngModel)]="hospital.hospitalId" [ngModelOptions]="{standalone: true}" class="form-control"
+             id="input4hospitalId" placeholder="Auto Generated Hospital ID" readonly type="text">
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="emailId">Email</label>
-        <input [(ngModel)]="hospital.emailId" class="form-control" id="emailId" name="emailId" type="email">
+        <label for="input4emailId">Email</label>
+        <input [(ngModel)]="hospital.emailId" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="input4emailId" type="email">
       </div>
       <div class="form-group col-md-6">
-        <label for="phone">Phone</label>
-        <input [(ngModel)]="hospital.phone" class="form-control" id="phone" name="phone" type="test">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="city">City</label>
-        <input [(ngModel)]="hospital.city" class="form-control" id="city" name="city" type="text">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="zipCode">Zip</label>
-        <input [(ngModel)]="hospital.zipCode" class="form-control" id="zipCode" name="zipCode" type="text">
+        <label for="input4phone">Phone</label>
+        <input [(ngModel)]="hospital.phone" [ngModelOptions]="{standalone: true}" class="form-control" id="input4phone"
+               type="text">
       </div>
     </div>
     <div class="form-group">
-      <label for="details">Details</label>
-      <input [(ngModel)]="hospital.details" class="form-control" id="details" name="details"
-             placeholder="Additional Details" type="text">
+      <label for="input4details">Address</label>
+      <input [(ngModel)]="hospital.addressDetails" [ngModelOptions]="{standalone: true}" class="form-control"
+             id="input4details" placeholder="Address" type="text">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="input4city">City</label>
+        <input [(ngModel)]="hospital.city" [ngModelOptions]="{standalone: true}" class="form-control" id="input4city"
+               type="text">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="input4zipCode">Zip</label>
+        <input (change)="updateId()" [(ngModel)]="hospital.zipCode" [ngModelOptions]="{standalone: true}"
+               class="form-control" id="input4zipCode" required=true type="text">
+      </div>
     </div>
     <button class="btn btn-primary" type="submit">Add/Update</button>
+    <div *ngIf="isSaved" class="alert alert-success">Saved successfully. You can close or move to other page.</div>
+    <div *ngIf="!isSaved" class="alert alert-error">Not Saved.</div>
+
   </form>
 
 </div>

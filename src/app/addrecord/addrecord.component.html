@@ -1,101 +1,125 @@
-<div class="content" role="main">
-
-  <!-- Resources -->
-  <h3>Live status of available hospital resources</h3>
-  <br>
-
+<div *ngIf="!isLoggedIn" class="content" role="main">
+  <div class="alert alert-warning">You are not authorised to view this page</div>
+</div>
+<div *ngIf="isLoggedIn" class="content" role="main">
   <h3>Add/Update Record</h3>
+  <br>
+  <div *ngIf="isSaved" class="alert alert-success">Record saved successfully</div>
+  <div *ngIf="isError" class="alert alert-error">Error saving record</div>
 
-  <form>
+  <form (submit)="addUpdate()">
     <div class="form-group">
-      <label for="inputAddress">Name</label>
-      <input class="form-control" id="inputAddress" placeholder="Hospital Name" readonly type="text">
+      <label for="inputHospitalID">HospitalID</label>
+      <input [(ngModel)]="hospitalRecord.hospitalRegistration.hospitalId" [ngModelOptions]="{standalone: true}"
+             class="form-control" id="inputHospitalID" placeholder="Hospital ID" readonly type="text">
+    </div>
+    <div class="form-group">
+      <label for="inputName">Name</label>
+      <input (change)="updateId()" [(ngModel)]="hospitalRecord.hospitalRegistration.name"
+             [ngModelOptions]="{standalone: true}" class="form-control" id="inputName" placeholder="Hospital Name"
+             type="text">
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputEmail4">Email</label>
-        <input class="form-control" id="inputEmail4" type="email">
+        <input [(ngModel)]="hospitalRecord.hospitalRegistration.emailId" [ngModelOptions]="{standalone: true}"
+               class="form-control" id="inputEmail4" type="email">
       </div>
       <div class="form-group col-md-6">
-        <label for="inputPassword4">Phone</label>
-        <input class="form-control" id="inputPassword4" type="password">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="inputEmail4">Floor</label>
-        <input class="form-control" id="inputEmail4" type="email">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputPassword4">Section</label>
-        <input class="form-control" id="inputPassword4" type="password">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputPassword4">Room</label>
-        <input class="form-control" id="inputPassword4" type="password">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputEmail4">ItemType</label>
-        <input class="form-control" id="inputEmail4" type="email">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="inputPassword4">ItemCount</label>
-        <input class="form-control" id="inputPassword4" type="password">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputPassword4">ItemName</label>
-        <input class="form-control" id="inputPassword4" type="password">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="inputPassword4">ItemID</label>
-        <input class="form-control" id="inputPassword4" type="password">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputAddress">Available From</label>
-        <input class="form-control" id="inputAddress" type="date">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="inputAddress">Available Till</label>
-        <input class="form-control" id="inputAddress" type="date">
+        <label for="inputPhone4">Phone</label>
+        <input [(ngModel)]="hospitalRecord.hospitalRegistration.phone" [ngModelOptions]="{standalone: true}"
+               class="form-control" id="inputPhone4" type="text">
       </div>
     </div>
     <div class="form-group">
-      <label for="inputAddress2">Address 2</label>
-      <input class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" type="text">
+      <label for="inputAddress">Address</label>
+      <input [(ngModel)]="hospitalRecord.hospitalRegistration.addressDetails" [ngModelOptions]="{standalone: true}"
+             class="form-control" id="inputAddress" placeholder="Address" type="text">
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputCity">City</label>
-        <input class="form-control" id="inputCity" type="text">
+        <input [(ngModel)]="hospitalRecord.hospitalRegistration.city" [ngModelOptions]="{standalone: true}"
+               class="form-control" id="inputCity" type="text">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputZipCode4">Zip Code</label>
+        <input (change)="updateId()" [(ngModel)]="hospitalRecord.hospitalRegistration.zipCode"
+               [ngModelOptions]="{standalone: true}" class="form-control" id="inputZipCode4" type="text">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputFloor4">Floor</label>
+        <input [(ngModel)]="hospitalRecord.floor" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputFloor4" type="text">
       </div>
       <div class="form-group col-md-4">
-        <label for="inputState">State</label>
-        <select class="form-control" id="inputState">
-          <option selected>Choose...</option>
-          <option>Delhi</option>
-          <option>...</option>
-        </select>
+        <label for="inputPassword4">Section</label>
+        <input [(ngModel)]="hospitalRecord.section" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputPassword4" type="text">
       </div>
-      <div class="form-group col-md-2">
-        <label for="inputZip">Zip</label>
-        <input class="form-control" id="inputZip" type="text">
+      <div class="form-group col-md-4">
+        <label for="inputPassword4">Room</label>
+        <input [(ngModel)]="hospitalRecord.room" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputPassword4" type="text">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputItemType4">Item Type</label>
+        <input [(ngModel)]="hospitalRecord.itemType" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputItemType4" type="text">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputItemCount4">Item Count</label>
+        <input [(ngModel)]="hospitalRecord.itemCount" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputItemCount4" type="text">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputItemCount4">Available Count</label>
+        <input [(ngModel)]="hospitalRecord.availableCount" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputItemCount4" type="text">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputItemName4">Item Name</label>
+        <input [(ngModel)]="hospitalRecord.itemName" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputItemName4" type="text">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputItemID4">ItemID</label>
+        <input [(ngModel)]="hospitalRecord.itemId" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputItemID4" type="text">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputAvailableFrom">Available From</label>
+        <input [(ngModel)]="hospitalRecord.availableFrom" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputAvailableFrom" type="date">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputAvailableTill">Available Till</label>
+        <input [(ngModel)]="hospitalRecord.availableTill" [ngModelOptions]="{standalone: true}" class="form-control"
+               id="inputAvailableTill" type="date">
       </div>
     </div>
     <div class="form-group">
-      <div class="form-check">
-        <input class="form-check-input" id="gridCheck" type="checkbox">
-        <label class="form-check-label" for="gridCheck">
-          Notify On Subscribe
-        </label>
-      </div>
+      <label for="inputNotes2">Note</label>
+      <input [(ngModel)]="hospitalRecord.note" [ngModelOptions]="{standalone: true}" class="form-control"
+             id="inputNotes2" placeholder="Any Notes" type="text">
+    </div>
+    <div class="form-check">
+      <input [(ngModel)]="hospitalRecord.notifyWhenUserSubscribe" [ngModelOptions]="{standalone: true}"
+             class="form-check-input" id="gridCheck" type="checkbox">
+      <label class="form-check-label" for="gridCheck">
+        Notify On Subscribe
+      </label>
     </div>
     <button class="btn btn-primary" type="submit">Add/Update</button>
   </form>
-
+  <div *ngIf="isSaved" class="alert alert-success">Record saved successfully</div>
+  <div *ngIf="isError" class="alert alert-error">Error saving record</div>
 </div>

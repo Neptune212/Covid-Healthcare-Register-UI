@@ -28,14 +28,22 @@ function sort(hospitalRecords: HospitalRecord[], column: string,): HospitalRecor
 }
 
 function matches(hospitalRecord: HospitalRecord, term: string, pipe: PipeTransform) {
-  return hospitalRecord.name.toLowerCase().includes(term)
-    || pipe.transform(hospitalRecord.address).includes(term)
+  return hospitalRecord.hospitalRegistration.name.toLowerCase().includes(term)
+    || pipe.transform(hospitalRecord.hospitalRegistration.addressDetails).includes(term)
     || pipe.transform(hospitalRecord.itemName).includes(term);
 }
 
 @Injectable({providedIn: 'root'})
 export class HospitalRecordService {
+  private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
+
+  get loading$() {
+    return this._loading$.asObservable();
+  }
+
+  private _hospitalRecords$ = new BehaviorSubject<HospitalRecord[]>([]);
+
   private _state: State = {
     page: 1,
     pageSize: 4,
@@ -57,14 +65,6 @@ export class HospitalRecordService {
 
     this._search$.next();
   }
-
-  private _loading$ = new BehaviorSubject<boolean>(true);
-
-  get loading$() {
-    return this._loading$.asObservable();
-  }
-
-  private _hospitalRecords$ = new BehaviorSubject<HospitalRecord[]>([]);
 
   get hospitalRecords$() {
     return this._hospitalRecords$.asObservable();

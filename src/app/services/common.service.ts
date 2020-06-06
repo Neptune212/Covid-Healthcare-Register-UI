@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -6,9 +6,7 @@ import {EventEmitter, Injectable, Output} from '@angular/core';
 export class CommonService {
 
   @Output() loginEvent = new EventEmitter<boolean>();
-
-  constructor() {
-  }
+  constructor() { }
 
   Login(login: boolean) {
     this.loginEvent.emit(login);

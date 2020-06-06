@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Country, CovidSummary, Global} from '../models/covid_summary';
-import {Observable, of} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CovidSummary, Global, Country } from '../models/covid_summary';
+import { of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-covid-status-page',
@@ -13,8 +13,7 @@ export class CovidStatusPageComponent implements OnInit {
   global: Observable<Global>;
   countries: Observable<Country[]>;
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.http.get<CovidSummary>('https://api.covid19api.com/summary').subscribe(

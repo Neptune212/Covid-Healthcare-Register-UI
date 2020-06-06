@@ -1,5 +1,6 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import {} from 'googlemaps';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-gmap-location',
@@ -17,8 +18,7 @@ export class GmapLocationComponent implements OnInit {
   @Input()
   longitude: number;
 
-  constructor(public activatedRoute: ActivatedRoute) {
-  }
+  constructor(public activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     console.log('latitude=' + this.latitude);

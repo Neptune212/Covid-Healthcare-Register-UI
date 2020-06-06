@@ -23,8 +23,8 @@ function compare(v1, v2) {
   return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 }
 
-function sort(hospitalRecords: HospitalRecord[], column: string,): HospitalRecord[] {
-  return hospitalRecords;
+function sort(hospitalRecords: HospitalRecord[], column: string, ): HospitalRecord[] {
+    return hospitalRecords;
 }
 
 function matches(hospitalRecord: HospitalRecord, term: string, pipe: PipeTransform) {
@@ -37,12 +37,8 @@ function matches(hospitalRecord: HospitalRecord, term: string, pipe: PipeTransfo
 export class HospitalRecordService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
-
-  get loading$() {
-    return this._loading$.asObservable();
-  }
-
   private _hospitalRecords$ = new BehaviorSubject<HospitalRecord[]>([]);
+  private _total$ = new BehaviorSubject<number>(0);
 
   private _state: State = {
     page: 1,
@@ -66,43 +62,17 @@ export class HospitalRecordService {
     this._search$.next();
   }
 
-  get hospitalRecords$() {
-    return this._hospitalRecords$.asObservable();
-  }
+  get hospitalRecords$() { return this._hospitalRecords$.asObservable(); }
+  get total$() { return this._total$.asObservable(); }
+  get loading$() { return this._loading$.asObservable(); }
+  get page() { return this._state.page; }
+  get pageSize() { return this._state.pageSize; }
+  get searchTerm() { return this._state.searchTerm; }
 
-  private _total$ = new BehaviorSubject<number>(0);
-
-  get total$() {
-    return this._total$.asObservable();
-  }
-
-  get page() {
-    return this._state.page;
-  }
-
-  set page(page: number) {
-    this._set({page});
-  }
-
-  get pageSize() {
-    return this._state.pageSize;
-  }
-
-  set pageSize(pageSize: number) {
-    this._set({pageSize});
-  }
-
-  get searchTerm() {
-    return this._state.searchTerm;
-  }
-
-  set searchTerm(searchTerm: string) {
-    this._set({searchTerm});
-  }
-
-  set sortColumn(sortColumn: string) {
-    this._set({sortColumn});
-  }
+  set page(page: number) { this._set({page}); }
+  set pageSize(pageSize: number) { this._set({pageSize}); }
+  set searchTerm(searchTerm: string) { this._set({searchTerm}); }
+  set sortColumn(sortColumn: string) { this._set({sortColumn}); }
 
   private _set(patch: Partial<State>) {
     Object.assign(this._state, patch);

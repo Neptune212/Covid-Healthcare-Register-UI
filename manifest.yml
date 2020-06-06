@@ -1,7 +1,7 @@
 ---
 applications:
 - buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
-  host: simple-website-WELCOMEAPP2020
-  name: simple-website-WELCOMEAPP2020
+  host: covid-healthcare-register-wit2020
+  name: covid-healthcare-register-wit2020
   memory: 256M
   stack: cflinuxfs2

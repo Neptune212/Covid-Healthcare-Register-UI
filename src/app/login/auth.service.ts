@@ -1,7 +1,7 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {map} from 'rxjs/operators';
-import {environment} from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,14 +21,11 @@ export class AuthenticationService {
 
   authenticationService(username: string, password: string) {
     return this.http.get(this.chrbaseuri + '/basicauth',
-      {
-        headers: {authorization: this.createBasicAuthToken(username, password)},
-        responseType: 'text'
-      }).pipe(map((res) => {
-      AuthenticationService.username = username;
-      AuthenticationService.password = password;
-      this.registerSuccessfulLogin(username, password);
-    }));
+      { headers: { authorization: this.createBasicAuthToken(username, password) }, responseType: 'text' }).pipe(map((res) => {
+        AuthenticationService.username = username;
+        AuthenticationService.password = password;
+        this.registerSuccessfulLogin(username, password);
+      }));
   }
 
   createBasicAuthToken(username: string, password: string) {

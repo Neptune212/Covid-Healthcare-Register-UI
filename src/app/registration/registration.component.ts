@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {HospitalRegistration} from '../models/hospital_registration';
-import {environment} from '../../environments/environment';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HospitalRegistration } from '../models/hospital_registration';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-registration',
@@ -15,8 +15,7 @@ export class RegistrationComponent implements OnInit {
   chrbaseuri: string = environment.chrbaseuri;
   isSaved: boolean;
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     console.log('ngOnInit()');
@@ -30,14 +29,14 @@ export class RegistrationComponent implements OnInit {
   }
 
   updateId(): void {
-    if (this.hospital.name !== undefined && this.hospital.zipCode !== undefined) {
+    if (this.hospital.name !== undefined && this.hospital.zipCode !== undefined){
       this.hospital.hospitalId = this.hospital.name + this.hospital.zipCode;
     }
   }
 
   addUpdate(): boolean {
     console.log('addUpdate()' + JSON.stringify(this.hospital));
-    if (this.hospital.hospitalId !== undefined || this.hospital.hospitalId !== null || this.hospital.hospitalId == '') {
+    if (this.hospital.hospitalId !== undefined || this.hospital.hospitalId !== null || this.hospital.hospitalId == ''){
       this.hospital.hospitalId = this.hospital.name + this.hospital.zipCode;
       this.hospital.hospitalId = this.hospital.hospitalId.toLocaleUpperCase().replace('/\s+/g', '');
     }
@@ -56,7 +55,7 @@ export class RegistrationComponent implements OnInit {
     return false;
   }
 
-  doNothing() {
+  doNothing(){
     console.log('doNothing()');
   }
 
